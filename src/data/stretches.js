@@ -1,0 +1,60 @@
+const stretches = [
+  {
+    id: 1,
+    name: "Neck tilt",
+    duration: 30,
+    muscle: "Neck",
+    instruction: "Tilt your head slowly to the right, bringing your ear toward your shoulder. Hold and breathe.",
+    side: null,
+  },
+  {
+    id: 2,
+    name: "Shoulder cross",
+    duration: 30,
+    muscle: "Shoulders",
+    instruction: "Bring your right arm across your chest and hold it with your left hand. Keep your shoulder down.",
+    side: "Right then Left",
+  },
+  {
+    id: 3,
+    name: "Chest opener",
+    duration: 30,
+    muscle: "Chest",
+    instruction: "Clasp your hands behind your back, squeeze your shoulder blades together and lift your chest.",
+    side: null,
+  },
+  {
+    id: 4,
+    name: "Hamstring stretch",
+    duration: 40,
+    muscle: "Hamstrings",
+    instruction: "Sit on the floor with one leg straight. Reach toward your toes and hold.",
+    side: "Right then Left",
+  },
+  {
+    id: 5,
+    name: "Hip flexor lunge",
+    duration: 40,
+    muscle: "Hips",
+    instruction: "Step one foot forward into a lunge. Lower your back knee to the floor and push your hips forward.",
+    side: "Right then Left",
+  },
+  {
+    id: 6,
+    name: "Quad stretch",
+    duration: 30,
+    muscle: "Quads",
+    instruction: "Stand on one leg, pull your other foot up to your glutes. Keep your knees together.",
+    side: "Right then Left",
+  },
+  {
+    id: 7,
+    name: "Calf stretch",
+    duration: 30,
+    muscle: "Calves",
+    instruction: "Step one foot back and press your heel into the floor. Lean forward slightly to deepen the stretch.",
+    side: "Right then Left",
+  },
+]
+
+export default stretches
