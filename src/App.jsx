@@ -1,8 +1,8 @@
 import { useState } from "react"
-import HomeScreen from "./components/HomeScreen"
+import RoutineScreen from "./components/RoutineScreen"
 import SessionScreen from "./components/SessionScreen"
 import CompletionScreen from "./components/CompletionScreen"
-import stretches from "./data/stretches"
+import routines from "./data/stretches"
 import { saveData, calculateStreak, getLevelInfo } from "./storage"
 
 const defaultData = {
@@ -13,13 +13,17 @@ const defaultData = {
 }
 
 function App() {
-  const [screen, setScreen] = useState("home")
+  const [screen, setScreen] = useState("routines")
+  const [selectedRoutine, setSelectedRoutine] = useState(null)
   const [finalScore, setFinalScore] = useState(0)
   const [userData, setUserData] = useState(defaultData)
 
   const levelInfo = getLevelInfo(userData.totalXP)
-  const today = new Date().toDateString()
-  const alreadyDoneToday = userData.lastSessionDate === today
+
+  function handleSelectRoutine(routine) {
+    setSelectedRoutine(routine)
+    setScreen("session")
+  }
 
   function handleComplete(score) {
     const safeScore = score || 0
@@ -36,15 +40,11 @@ function App() {
     setScreen("complete")
   }
 
-  if (screen === "home") {
+  if (screen === "routines") {
     return (
-      <HomeScreen
-        onStart={() => setScreen("session")}
-        streak={userData.streak}
-        shields={userData.shields}
-        totalXP={userData.totalXP}
-        levelInfo={levelInfo}
-        alreadyDoneToday={alreadyDoneToday}
+      <RoutineScreen
+        routines={routines}
+        onSelect={handleSelectRoutine}
       />
     )
   }
@@ -52,7 +52,7 @@ function App() {
   if (screen === "session") {
     return (
       <SessionScreen
-        stretches={stretches}
+        routine={selectedRoutine}
         onComplete={handleComplete}
       />
     )
@@ -65,7 +65,7 @@ function App() {
         newStreak={userData.streak}
         shields={userData.shields}
         levelInfo={levelInfo}
-        onHome={() => setScreen("home")}
+        onHome={() => setScreen("routines")}
       />
     )
   }
