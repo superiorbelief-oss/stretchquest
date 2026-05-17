@@ -35,32 +35,22 @@ function MiniGame({ onScoreUpdate }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-5 w-full shadow-sm border border-gray-100">
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-sm font-medium text-gray-500">🎮 Tap when green!</p>
-        <div className="flex items-center gap-1">
-          <span className="text-sm text-gray-400">Score:</span>
-          <span className="text-sm font-medium text-purple-600">{score}</span>
-        </div>
+    <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em" }}>TAP GAME</div>
+        <div style={{ fontSize: "12px", color: "#ff6b2b" }}>Score: {score}</div>
       </div>
-
-      <div className="flex flex-col items-center">
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <button
           onClick={handleTap}
-          className="w-20 h-20 rounded-full transition-all duration-150 active:scale-95"
-          style={{
-            background: isGreen ? "#1D9E75" : "#e9d5ff",
-            boxShadow: isGreen ? "0 0 20px rgba(29,158,117,0.4)" : "none"
-          }}
+          style={{ width: "64px", height: "64px", borderRadius: "50%", border: "1px solid " + (isGreen ? "#1a9e75" : "#333"), background: isGreen ? "#1a9e75" : "#1a1a1a", cursor: "pointer", transition: "all 0.15s" }}
         />
-
-        <div className="h-6 mt-3">
-          {feedback === "nice" && (
-            <p className="text-green-500 text-sm font-medium">Nice! +1</p>
-          )}
-          {feedback === "miss" && (
-            <p className="text-red-400 text-sm font-medium">Too early!</p>
-          )}
+        <div style={{ height: "20px", marginTop: "8px", fontSize: "12px" }}>
+          {feedback === "nice" && <span style={{ color: "#1a9e75" }}>Nice! +1</span>}
+          {feedback === "miss" && <span style={{ color: "#ff4444" }}>Too early!</span>}
+        </div>
+        <div style={{ fontSize: "11px", color: "#555" }}>
+          {isGreen ? "TAP NOW!" : "Wait for green..."}
         </div>
       </div>
     </div>

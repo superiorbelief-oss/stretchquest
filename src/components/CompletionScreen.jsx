@@ -6,48 +6,48 @@ function CompletionScreen({ onHome, gameScore, newStreak, shields, levelInfo }) 
   const earnedShield = newStreak % 7 === 0 && newStreak > 0
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6">
-      <div className="text-center mb-8">
-        <div className="text-6xl mb-4">🎉</div>
-        <h2 className="text-3xl font-medium text-gray-800 mb-2">Session complete!</h2>
-        <p className="text-gray-400">Great work — you've stretched your whole body</p>
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 20px" }}>
+      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <div style={{ fontSize: "48px", marginBottom: "12px" }}>✓</div>
+        <div style={{ fontSize: "24px", fontWeight: "500", color: "#ffffff", marginBottom: "4px" }}>Session complete</div>
+        <div style={{ fontSize: "13px", color: "#555" }}>Full body stretched</div>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-sm border border-gray-100 mb-4 text-center">
-        <p className="text-4xl font-medium text-purple-600 mb-1">+{totalXP} XP</p>
-        <p className="text-gray-400 text-sm">earned today</p>
+      <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "20px", width: "100%", maxWidth: "400px", marginBottom: "10px", textAlign: "center" }}>
+        <div style={{ fontSize: "36px", fontWeight: "500", color: "#ff6b2b", marginBottom: "4px" }}>+{totalXP} XP</div>
+        <div style={{ fontSize: "12px", color: "#555" }}>earned today</div>
       </div>
 
-      <div className="bg-white rounded-2xl p-4 w-full max-w-sm shadow-sm border border-gray-100 mb-4">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-400">Base XP</span>
-          <span className="text-gray-700 font-medium">+{baseXP}</span>
+      <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "14px", padding: "14px", width: "100%", maxWidth: "400px", marginBottom: "10px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "8px" }}>
+          <span style={{ color: "#555" }}>Base XP</span>
+          <span style={{ color: "#ffffff" }}>+{baseXP}</span>
         </div>
-        <div className="flex justify-between text-sm mt-2">
-          <span className="text-gray-400">Game bonus ({safeScore} taps)</span>
-          <span className="text-green-500 font-medium">+{bonusXP}</span>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
+          <span style={{ color: "#555" }}>Game bonus ({safeScore} taps)</span>
+          <span style={{ color: "#ff6b2b" }}>+{bonusXP}</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-4 w-full max-w-sm shadow-sm border border-gray-100 mb-8">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span>🔥</span>
-            <span className="text-gray-700 font-medium">{newStreak} day streak!</span>
+      <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "14px", padding: "14px", width: "100%", maxWidth: "400px", marginBottom: "24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "18px" }}>🔥</span>
+            <span style={{ fontSize: "13px", fontWeight: "500", color: "#ffffff" }}>{newStreak} day streak</span>
           </div>
-          <span className="text-sm text-purple-600 font-medium">{levelInfo?.name}</span>
+          <span style={{ fontSize: "12px", color: "#ff6b2b" }}>{levelInfo?.name}</span>
         </div>
         {earnedShield && (
-          <div className="mt-3 bg-blue-50 rounded-xl p-3 text-center">
-            <p className="text-blue-500 font-medium text-sm">❄️ Freeze shield earned!</p>
-            <p className="text-blue-400 text-xs mt-1">7 day streak reward</p>
+          <div style={{ marginTop: "10px", background: "#0d1a2a", border: "1px solid #1a3a5c", borderRadius: "10px", padding: "10px", textAlign: "center" }}>
+            <div style={{ fontSize: "12px", color: "#4a9eff", fontWeight: "500" }}>Freeze shield earned!</div>
+            <div style={{ fontSize: "11px", color: "#3a7acc", marginTop: "2px" }}>7 day streak reward</div>
           </div>
         )}
       </div>
 
       <button
         onClick={onHome}
-        className="bg-purple-600 text-white text-lg font-medium px-16 py-4 rounded-2xl hover:bg-purple-700 transition-colors"
+        style={{ background: "#ff6b2b", color: "#ffffff", border: "none", borderRadius: "14px", padding: "16px 48px", fontSize: "14px", fontWeight: "500", cursor: "pointer", width: "100%", maxWidth: "400px" }}
       >
         Back to home
       </button>

@@ -4,53 +4,48 @@ function HomeScreen({ onStart, streak, shields, totalXP, levelInfo, alreadyDoneT
   const safeLevelInfo = levelInfo || { name: "Stiff", progress: 0, max: 500 }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6 gap-6">
-      <div className="text-center">
-        <h1 className="text-5xl font-medium text-purple-600 mb-2">StretchQuest</h1>
-        <p className="text-gray-400 text-lg">Daily stretching made fun</p>
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+      <div style={{ width: "100%", maxWidth: "400px" }}>
+        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em", marginBottom: "4px" }}>WELCOME BACK</div>
+        <div style={{ fontSize: "28px", fontWeight: "500", color: "#ffffff", marginBottom: "2px" }}>Stretcher</div>
+        <div style={{ fontSize: "13px", color: "#555" }}>Avoid injury with Stretcher</div>
       </div>
 
-      <StreakBar
-        streak={streak || 0}
-        shields={shields || 0}
-        totalXP={totalXP || 0}
-        levelInfo={safeLevelInfo}
-      />
+      <div style={{ width: "100%", maxWidth: "400px" }}>
+        <StreakBar streak={streak || 0} shields={shields || 0} totalXP={totalXP || 0} levelInfo={safeLevelInfo} />
+      </div>
 
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-sm border border-gray-100">
-        <div className="flex justify-between text-center">
+      <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", width: "100%", maxWidth: "400px" }}>
+        <div style={{ display: "flex", justifyContent: "space-around", textAlign: "center" }}>
           <div>
-            <p className="text-2xl font-medium text-purple-600">7</p>
-            <p className="text-xs text-gray-400 mt-1">Stretches</p>
+            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>7</div>
+            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>stretches</div>
           </div>
+          <div style={{ width: "1px", background: "#222" }} />
           <div>
-            <p className="text-2xl font-medium text-purple-600">5</p>
-            <p className="text-xs text-gray-400 mt-1">Minutes</p>
+            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>5</div>
+            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>minutes</div>
           </div>
+          <div style={{ width: "1px", background: "#222" }} />
           <div>
-            <p className="text-2xl font-medium text-purple-600">Full</p>
-            <p className="text-xs text-gray-400 mt-1">Body</p>
+            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>Full</div>
+            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>body</div>
           </div>
         </div>
       </div>
 
       {alreadyDoneToday ? (
-        <div className="text-center">
-          <p className="text-green-500 font-medium">✓ Session complete for today!</p>
-          <p className="text-gray-400 text-sm mt-1">Come back tomorrow to keep your streak</p>
-          <button
-            onClick={onStart}
-            className="mt-4 text-purple-500 text-sm underline"
-          >
-            Do another session anyway
-          </button>
+        <div style={{ textAlign: "center", width: "100%", maxWidth: "400px" }}>
+          <div style={{ fontSize: "13px", color: "#1a9e75", fontWeight: "500", marginBottom: "8px" }}>Session complete for today!</div>
+          <div style={{ fontSize: "12px", color: "#555", marginBottom: "12px" }}>Come back tomorrow to keep your streak</div>
+          <button onClick={onStart} style={{ fontSize: "12px", color: "#555", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Do another session anyway</button>
         </div>
       ) : (
         <button
           onClick={onStart}
-          className="bg-purple-600 text-white text-lg font-medium px-16 py-4 rounded-2xl hover:bg-purple-700 transition-colors"
+          style={{ background: "#ff6b2b", color: "#ffffff", border: "none", borderRadius: "14px", padding: "16px", fontSize: "15px", fontWeight: "500", cursor: "pointer", width: "100%", maxWidth: "400px" }}
         >
-          Start stretching
+          Start session
         </button>
       )}
     </div>

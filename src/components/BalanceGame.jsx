@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 function BalanceGame({ onScoreUpdate }) {
   const videoRef = useRef(null)
-  const [status, setStatus] = useState("waiting")
+  const [status, setStatus] = useState("requesting")
   const [beamAngle, setBeamAngle] = useState(0)
   const [score, setScore] = useState(0)
   const [fallen, setFallen] = useState(false)
@@ -11,7 +11,6 @@ function BalanceGame({ onScoreUpdate }) {
   const landmarkerRef = useRef(null)
 
   useEffect(() => {
-    setStatus("requesting")
     setupCamera()
     return () => {
       if (animRef.current) cancelAnimationFrame(animRef.current)
@@ -25,19 +24,17 @@ function BalanceGame({ onScoreUpdate }) {
       if (videoRef.current) {
         videoRef.current.srcObject = stream
         await videoRef.current.play()
-        setStatus("loading_ai")
+        setStatus("loading_model")
         await setupPose()
       }
     } catch (e) {
       setStatus("error")
-      console.error("Camera error", e)
     }
   }
 
   async function setupPose() {
     try {
       const { PoseLandmarker, FilesetResolver } = await import("@mediapipe/tasks-vision")
-      setStatus("loading_model")
       const vision = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
       )
@@ -54,7 +51,6 @@ function BalanceGame({ onScoreUpdate }) {
       detect()
     } catch (e) {
       setStatus("error")
-      console.error("Pose error", e)
     }
   }
 
@@ -87,36 +83,33 @@ function BalanceGame({ onScoreUpdate }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 w-full shadow-sm border border-gray-100">
-      <div className="flex justify-between items-center mb-3">
-        <p className="text-sm font-medium text-gray-500">Balance game</p>
-        <span className="text-sm font-medium text-purple-600">{score} pts</span>
+    <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em" }}>BALANCE GAME</div>
+        <div style={{ fontSize: "12px", color: "#ff6b2b" }}>Score: {score}</div>
       </div>
 
-      <div className="text-center py-2">
-        {status === "requesting" && <p className="text-sm text-gray-400">Requesting camera...</p>}
-        {status === "camera_ready" && <p className="text-sm text-gray-400">Camera ready...</p>}
-        {status === "loading_ai" && <p className="text-sm text-purple-400">Loading AI...</p>}
-        {status === "loading_model" && <p className="text-sm text-purple-400">Loading pose model... this takes 10-15 seconds</p>}
-        {status === "error" && <p className="text-sm text-red-400">Something went wrong — try refreshing</p>}
-      </div>
+      {status === "requesting" && <p style={{ fontSize: "12px", color: "#555", textAlign: "center", padding: "12px" }}>Requesting camera...</p>}
+      {status === "camera_ready" && <p style={{ fontSize: "12px", color: "#555", textAlign: "center", padding: "12px" }}>Camera ready...</p>}
+      {status === "loading_model" && <p style={{ fontSize: "12px", color: "#ff6b2b", textAlign: "center", padding: "12px" }}>Loading AI... 10-15 seconds</p>}
+      {status === "error" && <p style={{ fontSize: "12px", color: "#ff4444", textAlign: "center", padding: "12px" }}>Something went wrong — try refreshing</p>}
 
-      <video ref={videoRef} className="w-full rounded-xl" style={{ transform: "scaleX(-1)", maxHeight: "160px", objectFit: "cover", display: status === "ready" ? "block" : "none" }} muted playsInline />
+      <video ref={videoRef} style={{ width: "100%", borderRadius: "10px", maxHeight: "160px", objectFit: "cover", transform: "scaleX(-1)", display: status === "ready" ? "block" : "none" }} muted playsInline />
 
       {status === "ready" && (
         <div>
-          <div className="flex justify-center mt-3">
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
             <svg width="200" height="80" viewBox="0 0 200 80">
               <g transform={"translate(100,60) rotate(" + beamAngle + ")"}>
-                <rect x="-80" y="-8" width="160" height="12" rx="4" fill={fallen ? "#E24B4A" : Math.abs(beamAngle) > 15 ? "#EF9F27" : "#7c3aed"} />
-                <circle cx="-60" cy="-14" r="8" fill="#534AB7" />
-                <circle cx="0" cy="-14" r="8" fill="#534AB7" />
-                <circle cx="60" cy="-14" r="8" fill="#534AB7" />
+                <rect x="-80" y="-8" width="160" height="12" rx="4" fill={fallen ? "#ff4444" : Math.abs(beamAngle) > 15 ? "#EF9F27" : "#ff6b2b"} />
+                <circle cx="-60" cy="-14" r="8" fill="#ff6b2b" opacity="0.6" />
+                <circle cx="0" cy="-14" r="8" fill="#ff6b2b" opacity="0.6" />
+                <circle cx="60" cy="-14" r="8" fill="#ff6b2b" opacity="0.6" />
               </g>
-              <polygon points="100,68 88,80 112,80" fill="#9ca3af" />
+              <polygon points="100,68 88,80 112,80" fill="#333" />
             </svg>
           </div>
-          <p className="text-xs text-center text-gray-400 mt-2">
+          <p style={{ fontSize: "11px", color: "#555", textAlign: "center", marginTop: "8px" }}>
             {fallen ? "Fell! Stay still!" : Math.abs(beamAngle) > 15 ? "Careful - tilting!" : "Great balance!"}
           </p>
         </div>

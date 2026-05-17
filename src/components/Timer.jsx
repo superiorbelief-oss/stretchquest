@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react"
 
-function Timer({ duration, onComplete }) {
+function Timer({ duration, onComplete, paused }) {
   const [timeLeft, setTimeLeft] = useState(duration)
 
   useEffect(() => {
     setTimeLeft(duration)
   }, [duration])
 
- useEffect(() => {
+  useEffect(() => {
+    if (paused) return
     if (timeLeft === 0) {
-      console.log("timer hit zero, calling onComplete")
       onComplete()
       return
     }
@@ -17,39 +17,26 @@ function Timer({ duration, onComplete }) {
       setTimeLeft(t => t - 1)
     }, 1000)
     return () => clearInterval(interval)
-  }, [timeLeft])
-  
+  }, [timeLeft, paused])
+
   const progress = timeLeft / duration
   const radius = 54
   const circumference = 2 * Math.PI * radius
   const offset = circumference * (1 - progress)
 
   return (
-    <div className="flex flex-col items-center">
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <svg width="140" height="140">
-        <circle
-          cx="70" cy="70" r={radius}
-          fill="none" stroke="#e9d5ff" strokeWidth="10"
-        />
-        <circle
-          cx="70" cy="70" r={radius}
-          fill="none" stroke="#7c3aed" strokeWidth="10"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          strokeLinecap="round"
-          transform="rotate(-90 70 70)"
-        />
-        <text
-          x="70" y="70"
-          textAnchor="middle"
-          dominantBaseline="central"
-          className="text-3xl"
-          style={{ fontSize: "32px", fontWeight: "500", fill: "#1f2937" }}
-        >
+        <circle cx="70" cy="70" r={radius} fill="none" stroke="#1a1a1a" strokeWidth="8" />
+        <circle cx="70" cy="70" r={radius} fill="none" stroke="#ff6b2b" strokeWidth="8"
+          strokeDasharray={circumference} strokeDashoffset={offset}
+          strokeLinecap="round" transform="rotate(-90 70 70)" />
+        <text x="70" y="70" textAnchor="middle" dominantBaseline="central"
+          style={{ fontSize: "32px", fontWeight: "500", fill: "#ffffff" }}>
           {timeLeft}
         </text>
       </svg>
-      <p className="text-gray-400 text-sm mt-1">seconds</p>
+      <p style={{ fontSize: "12px", color: "#555", marginTop: "4px" }}>seconds</p>
     </div>
   )
 }

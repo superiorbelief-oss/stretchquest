@@ -1,63 +1,69 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function VoiceControl({ onCommand }) {
   const [listening, setListening] = useState(false)
   const [lastCommand, setLastCommand] = useState("")
   const [supported, setSupported] = useState(true)
+  const recognitionRef = useRef(null)
+  const onCommandRef = useRef(onCommand)
 
   useEffect(() => {
-    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
+    onCommandRef.current = onCommand
+  }, [onCommand])
+
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
       setSupported(false)
       return
     }
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     const recognition = new SpeechRecognition()
-
     recognition.continuous = true
     recognition.interimResults = false
     recognition.lang = "en-US"
-
     recognition.onresult = (event) => {
       const transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase()
       setLastCommand(transcript)
-
-      if (transcript.includes("start")) onCommand("start")
-      else if (transcript.includes("next")) onCommand("next")
-      else if (transcript.includes("pause")) onCommand("pause")
-      else if (transcript.includes("done")) onCommand("done")
-      else if (transcript.includes("resume")) onCommand("resume")
+      if (transcript.includes("next")) onCommandRef.current("next")
+      else if (transcript.includes("pause")) onCommandRef.current("pause")
+      else if (transcript.includes("resume")) onCommandRef.current("resume")
+      else if (transcript.includes("done")) onCommandRef.current("done")
+      else if (transcript.includes("start")) onCommandRef.current("start")
     }
-
     recognition.onend = () => {
-      if (listening) recognition.start()
+      if (recognition.shouldRestart) recognition.start()
     }
+    recognitionRef.current = recognition
+  }, [])
 
+  useEffect(() => {
+    if (!recognitionRef.current) return
     if (listening) {
-      recognition.start()
+      recognitionRef.current.shouldRestart = true
+      try { recognitionRef.current.start() } catch(e) {}
+    } else {
+      recognitionRef.current.shouldRestart = false
+      try { recognitionRef.current.abort() } catch(e) {}
     }
-
-    return () => recognition.abort()
   }, [listening])
 
   if (!supported) return null
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col items-center gap-2">
+    <div style={{ position: "fixed", bottom: "24px", right: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
       <button
         onClick={() => setListening(l => !l)}
-        className="w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all"
-        style={{ background: listening ? "#7c3aed" : "#e9d5ff" }}
+        style={{ width: "52px", height: "52px", borderRadius: "50%", border: "1px solid " + (listening ? "#ff6b2b" : "#333"), background: listening ? "#1f1208" : "#141414", cursor: "pointer", fontSize: "20px" }}
       >
-        <span className="text-2xl">{listening ? "🎙️" : "🔇"}</span>
+        {listening ? "🎙️" : "🔇"}
       </button>
       {listening && lastCommand ? (
-        <div className="bg-white rounded-xl px-3 py-1 shadow text-xs text-gray-500">
-          heard: {lastCommand}
+        <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "8px", padding: "3px 10px", fontSize: "11px", color: "#555" }}>
+          {lastCommand}
         </div>
       ) : null}
       {listening && (
-        <div className="text-xs text-purple-500 font-medium">listening...</div>
+        <div style={{ fontSize: "10px", color: "#ff6b2b" }}>listening</div>
       )}
     </div>
   )

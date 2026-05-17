@@ -1,34 +1,32 @@
 function RoutineScreen({ routines, onSelect }) {
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-12 flex flex-col items-center">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-medium text-purple-600 mb-2">StretchQuest</h1>
-        <p className="text-gray-400">Choose your routine</p>
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", padding: "24px 20px" }}>
+      <div style={{ marginBottom: "24px" }}>
+        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em", marginBottom: "4px" }}>SELECT</div>
+        <h1 style={{ fontSize: "28px", fontWeight: "500", color: "#ffffff", marginBottom: "4px" }}>Stretcher</h1>
+        <p style={{ fontSize: "14px", color: "#555" }}>Avoid injury with Stretcher</p>
       </div>
 
-      <div className="w-full max-w-sm flex flex-col gap-4">
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {Object.values(routines).map(routine => (
           <button
             key={routine.id}
             onClick={() => onSelect(routine)}
-            className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-left hover:border-purple-300 transition-colors"
+            style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", textAlign: "left", cursor: "pointer", width: "100%" }}
           >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{routine.emoji}</span>
-                <div>
-                  <p className="font-medium text-gray-800">{routine.name}</p>
-                  <p className="text-sm text-gray-400">{routine.description}</p>
-                </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
+              <div style={{ width: "40px", height: "40px", background: "#1a1a1a", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>
+                {routine.emoji}
               </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "14px", fontWeight: "500", color: "#ffffff" }}>{routine.name}</div>
+                <div style={{ fontSize: "12px", color: "#555", marginTop: "2px" }}>{routine.description}</div>
+              </div>
+              <div style={{ color: "#333", fontSize: "18px" }}>›</div>
             </div>
-            <div className="flex gap-4 mt-3 ml-12">
-              <span className="text-xs text-purple-500 bg-purple-50 px-3 py-1 rounded-full">
-                {routine.stretches.length} stretches
-              </span>
-              <span className="text-xs text-purple-500 bg-purple-50 px-3 py-1 rounded-full">
-                {routine.duration}
-              </span>
+            <div style={{ display: "flex", gap: "6px", marginLeft: "52px" }}>
+              <span style={{ fontSize: "10px", color: "#ff6b2b", background: "#1f1208", padding: "2px 10px", borderRadius: "20px" }}>{routine.stretches.length} stretches</span>
+              <span style={{ fontSize: "10px", color: "#ff6b2b", background: "#1f1208", padding: "2px 10px", borderRadius: "20px" }}>{routine.duration}</span>
             </div>
           </button>
         ))}
