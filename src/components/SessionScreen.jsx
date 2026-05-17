@@ -2,6 +2,7 @@ import { useState } from "react"
 import Timer from "./Timer"
 import MiniGame from "./MiniGame"
 import VoiceControl from "./VoiceControl"
+import BalanceGame from "./BalanceGame"
 
 function SessionScreen({ routine, onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -10,6 +11,7 @@ function SessionScreen({ routine, onComplete }) {
   const [gameScore, setGameScore] = useState(0)
   const [sessionScore, setSessionScore] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [gameMode, setGameMode] = useState("tap")
 
   const currentStretch = routine.stretches[currentIndex]
   const currentSide = currentStretch.sides[currentSideIndex]
@@ -43,7 +45,6 @@ function SessionScreen({ routine, onComplete }) {
 
   const totalSteps = routine.stretches.reduce((acc, s) => acc + s.sides.length, 0)
   const completedSteps = routine.stretches.slice(0, currentIndex).reduce((acc, s) => acc + s.sides.length, 0) + currentSideIndex
-  const videoUrl = "https://www.youtube.com/watch?v=" + currentStretch.youtubeId
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10 flex flex-col items-center">
@@ -73,24 +74,23 @@ function SessionScreen({ routine, onComplete }) {
             <h2 className="text-2xl font-medium text-gray-800 mb-2">{currentStretch.name}</h2>
             <span className="text-sm text-white bg-purple-500 px-4 py-1 rounded-full">{currentSide}</span>
           </div>
-          <a href={videoUrl} target="_blank" rel="noreferrer" className="w-full bg-red-50 border border-red-100 rounded-2xl p-4 flex items-center gap-3">
-            <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-sm font-medium">PLAY</span>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-red-700">Watch demonstration</p>
-              <p className="text-xs text-red-400">Opens YouTube in a new tab</p>
-            </div>
-          </a>
           <Timer key={currentIndex + "-" + currentSideIndex} duration={currentStretch.duration} onComplete={handleTimerComplete} paused={paused} />
           <div className="bg-white rounded-2xl p-4 w-full shadow-sm border border-gray-100">
             <p className="text-gray-600 text-center leading-relaxed text-sm">{currentStretch.instruction}</p>
             <p className="text-purple-400 text-xs text-center mt-2 italic">{currentStretch.science}</p>
           </div>
+          <div className="flex gap-2 w-full">
+            <button onClick={() => setGameMode("tap")} className={"flex-1 py-2 rounded-xl text-sm font-medium " + (gameMode === "tap" ? "bg-purple-600 text-white" : "bg-white text-gray-500 border border-gray-200")}>Tap game</button>
+            <button onClick={() => setGameMode("balance")} className={"flex-1 py-2 rounded-xl text-sm font-medium " + (gameMode === "balance" ? "bg-purple-600 text-white" : "bg-white text-gray-500 border border-gray-200")}>Balance game</button>
+          </div>
+          {gameMode === "tap" ? (
+            <MiniGame key={"game-" + currentIndex + "-" + currentSideIndex} onScoreUpdate={setGameScore} />
+          ) : (
+            <BalanceGame key={"balance-" + currentIndex + "-" + currentSideIndex} onScoreUpdate={setGameScore} />
+          )}
           <div className="bg-purple-50 rounded-2xl p-3 w-full text-center">
             <p className="text-xs text-purple-400">Say next, pause, resume or done</p>
           </div>
-          <MiniGame key={"game-" + currentIndex + "-" + currentSideIndex} onScoreUpdate={setGameScore} />
         </div>
       )}
       <VoiceControl onCommand={handleVoiceCommand} />
