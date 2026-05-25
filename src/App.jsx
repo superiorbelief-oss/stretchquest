@@ -1,4 +1,7 @@
 import { useState } from "react"
+import WelcomeScreen from "./components/WelcomeScreen"
+import AuthScreen from "./components/AuthScreen"
+import OnboardingScreen from "./components/OnboardingScreen"
 import RoutineScreen from "./components/RoutineScreen"
 import SessionScreen from "./components/SessionScreen"
 import CompletionScreen from "./components/CompletionScreen"
@@ -13,12 +16,23 @@ const defaultData = {
 }
 
 function App() {
-  const [screen, setScreen] = useState("routines")
+  const [screen, setScreen] = useState("welcome")
+  const [authMode, setAuthMode] = useState("signup")
+  const [userName, setUserName] = useState("")
   const [selectedRoutine, setSelectedRoutine] = useState(null)
   const [finalScore, setFinalScore] = useState(0)
   const [userData, setUserData] = useState(defaultData)
 
   const levelInfo = getLevelInfo(userData.totalXP)
+
+  function handleAuth(data) {
+    setUserName(data.name || "")
+    setScreen("onboarding")
+  }
+
+  function handleOnboarding(answers) {
+    setScreen("routines")
+  }
 
   function handleSelectRoutine(routine) {
     setSelectedRoutine(routine)
@@ -40,35 +54,21 @@ function App() {
     setScreen("complete")
   }
 
-  if (screen === "routines") {
-    return (
-      <RoutineScreen
-        routines={routines}
-        onSelect={handleSelectRoutine}
-      />
-    )
+  function handleSwitch(mode) {
+    if (mode === "welcome") {
+      setScreen("welcome")
+    } else {
+      setAuthMode(mode)
+      setScreen("auth")
+    }
   }
 
-  if (screen === "session") {
-    return (
-      <SessionScreen
-        routine={selectedRoutine}
-        onComplete={handleComplete}
-      />
-    )
-  }
-
-  if (screen === "complete") {
-    return (
-      <CompletionScreen
-        gameScore={finalScore}
-        newStreak={userData.streak}
-        shields={userData.shields}
-        levelInfo={levelInfo}
-        onHome={() => setScreen("routines")}
-      />
-    )
-  }
+  if (screen === "welcome") return <WelcomeScreen onGetStarted={() => { setAuthMode("signup"); setScreen("auth") }} onLogin={() => { setAuthMode("login"); setScreen("auth") }} />
+  if (screen === "auth") return <AuthScreen mode={authMode} onComplete={handleAuth} onSwitch={handleSwitch} />
+  if (screen === "onboarding") return <OnboardingScreen userName={userName} onComplete={handleOnboarding} />
+  if (screen === "routines") return <RoutineScreen routines={routines} onSelect={handleSelectRoutine} />
+  if (screen === "session") return <SessionScreen routine={selectedRoutine} onComplete={handleComplete} />
+  if (screen === "complete") return <CompletionScreen gameScore={finalScore} newStreak={userData.streak} shields={userData.shields} levelInfo={levelInfo} onHome={() => setScreen("routines")} />
 }
 
 export default App

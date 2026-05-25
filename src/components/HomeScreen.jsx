@@ -1,51 +1,60 @@
-import StreakBar from "./StreakBar"
-
 function HomeScreen({ onStart, streak, shields, totalXP, levelInfo, alreadyDoneToday }) {
   const safeLevelInfo = levelInfo || { name: "Stiff", progress: 0, max: 500 }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0a", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
-      <div style={{ width: "100%", maxWidth: "400px" }}>
-        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em", marginBottom: "4px" }}>WELCOME BACK</div>
-        <div style={{ fontSize: "28px", fontWeight: "500", color: "#ffffff", marginBottom: "2px" }}>Stretcher</div>
-        <div style={{ fontSize: "13px", color: "#555" }}>Avoid injury with Stretcher</div>
+    <div style={{ minHeight: "100vh", background: "var(--base)", padding: "24px 20px 100px", display: "flex", flexDirection: "column", gap: "14px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+        <div>
+          <div style={{ fontSize: "9px", color: "var(--dim)", letterSpacing: "0.2em", marginBottom: "4px" }}>WELCOME BACK</div>
+          <div style={{ fontSize: "22px", fontWeight: "500", color: "var(--text)", letterSpacing: "0.05em" }}>STRETCHER</div>
+        </div>
+        <div style={{ width: "32px", height: "32px", border: "1px solid var(--border)", borderRadius: "4px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px" }}>
+          <div style={{ width: "12px", height: "1px", background: "var(--muted)" }}></div>
+          <div style={{ width: "12px", height: "1px", background: "var(--muted)" }}></div>
+          <div style={{ width: "8px", height: "1px", background: "var(--muted)" }}></div>
+        </div>
       </div>
 
-      <div style={{ width: "100%", maxWidth: "400px" }}>
-        <StreakBar streak={streak || 0} shields={shields || 0} totalXP={totalXP || 0} levelInfo={safeLevelInfo} />
+      <div style={{ background: "var(--card)", border: "1px solid var(--border)", borderLeft: "3px solid var(--accent)", borderRadius: "4px", padding: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+          <div style={{ fontSize: "9px", color: "var(--dim)", letterSpacing: "0.15em" }}>CURRENT STREAK</div>
+          <div style={{ fontSize: "9px", color: "var(--accent)", background: "var(--accent-bg)", padding: "2px 8px", borderRadius: "2px", letterSpacing: "0.08em" }}>{safeLevelInfo.name.toUpperCase()}</div>
+        </div>
+        <div style={{ fontSize: "32px", fontWeight: "500", color: "var(--text)", marginBottom: "2px" }}>
+          {streak || 0} <span style={{ fontSize: "14px", color: "var(--dim)", letterSpacing: "0.1em" }}>DAYS</span>
+        </div>
+        {shields > 0 && (
+          <div style={{ fontSize: "10px", color: "#6ab4ff", marginBottom: "8px" }}>❄️ {shields} freeze shield{shields > 1 ? "s" : ""}</div>
+        )}
+        <div style={{ height: "2px", background: "var(--border)", borderRadius: "1px", marginTop: "10px" }}>
+          <div style={{ width: (safeLevelInfo.progress * 100) + "%", height: "2px", background: "var(--accent)", borderRadius: "1px", transition: "width 0.3s" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
+          <div style={{ fontSize: "9px", color: "var(--dim)" }}>{totalXP || 0} XP</div>
+          <div style={{ fontSize: "9px", color: "var(--dim)" }}>{safeLevelInfo.max} XP</div>
+        </div>
       </div>
 
-      <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", width: "100%", maxWidth: "400px" }}>
-        <div style={{ display: "flex", justifyContent: "space-around", textAlign: "center" }}>
-          <div>
-            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>7</div>
-            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>stretches</div>
-          </div>
-          <div style={{ width: "1px", background: "#222" }} />
-          <div>
-            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>5</div>
-            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>minutes</div>
-          </div>
-          <div style={{ width: "1px", background: "#222" }} />
-          <div>
-            <div style={{ fontSize: "22px", fontWeight: "500", color: "#ff6b2b" }}>Full</div>
-            <div style={{ fontSize: "10px", color: "#555", marginTop: "2px" }}>body</div>
-          </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+        <div style={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "4px", padding: "14px" }}>
+          <div style={{ fontSize: "24px", fontWeight: "500", color: "var(--accent)" }}>7</div>
+          <div style={{ fontSize: "9px", color: "var(--dim)", marginTop: "4px", letterSpacing: "0.1em" }}>STRETCHES</div>
+        </div>
+        <div style={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "4px", padding: "14px" }}>
+          <div style={{ fontSize: "24px", fontWeight: "500", color: "var(--accent)" }}>5</div>
+          <div style={{ fontSize: "9px", color: "var(--dim)", marginTop: "4px", letterSpacing: "0.1em" }}>MINUTES</div>
         </div>
       </div>
 
       {alreadyDoneToday ? (
-        <div style={{ textAlign: "center", width: "100%", maxWidth: "400px" }}>
-          <div style={{ fontSize: "13px", color: "#1a9e75", fontWeight: "500", marginBottom: "8px" }}>Session complete for today!</div>
-          <div style={{ fontSize: "12px", color: "#555", marginBottom: "12px" }}>Come back tomorrow to keep your streak</div>
-          <button onClick={onStart} style={{ fontSize: "12px", color: "#555", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Do another session anyway</button>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "12px", color: "#5a9e6a", fontWeight: "500", marginBottom: "6px", letterSpacing: "0.05em" }}>SESSION COMPLETE FOR TODAY</div>
+          <div style={{ fontSize: "11px", color: "var(--dim)", marginBottom: "12px" }}>Come back tomorrow to keep your streak</div>
+          <button onClick={onStart} style={{ fontSize: "11px", color: "var(--muted)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", letterSpacing: "0.05em" }}>Do another session anyway</button>
         </div>
       ) : (
-        <button
-          onClick={onStart}
-          style={{ background: "#ff6b2b", color: "#ffffff", border: "none", borderRadius: "14px", padding: "16px", fontSize: "15px", fontWeight: "500", cursor: "pointer", width: "100%", maxWidth: "400px" }}
-        >
-          Start session
+        <button onClick={onStart} style={{ background: "var(--accent)", color: "#1a1a1a", border: "none", borderRadius: "4px", padding: "16px", fontSize: "13px", fontWeight: "500", cursor: "pointer", width: "100%", letterSpacing: "0.1em" }}>
+          START SESSION
         </button>
       )}
     </div>

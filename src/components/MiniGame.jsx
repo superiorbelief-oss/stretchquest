@@ -35,23 +35,20 @@ function MiniGame({ onScoreUpdate }) {
   }
 
   return (
-    <div style={{ background: "#141414", border: "1px solid #222", borderRadius: "16px", padding: "16px", width: "100%" }}>
+    <div style={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "4px", padding: "16px", width: "100%" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-        <div style={{ fontSize: "11px", color: "#555", letterSpacing: "0.05em" }}>TAP GAME</div>
-        <div style={{ fontSize: "12px", color: "#ff6b2b" }}>Score: {score}</div>
+        <div style={{ fontSize: "9px", color: "var(--dim)", letterSpacing: "0.15em" }}>TAP GAME</div>
+        <div style={{ fontSize: "11px", color: "var(--accent)", letterSpacing: "0.05em" }}>{score} PTS</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <button
-          onClick={handleTap}
-          style={{ width: "64px", height: "64px", borderRadius: "50%", border: "1px solid " + (isGreen ? "#1a9e75" : "#333"), background: isGreen ? "#1a9e75" : "#1a1a1a", cursor: "pointer", transition: "all 0.15s" }}
-        />
-        <div style={{ height: "20px", marginTop: "8px", fontSize: "12px" }}>
-          {feedback === "nice" && <span style={{ color: "#1a9e75" }}>Nice! +1</span>}
-          {feedback === "miss" && <span style={{ color: "#ff4444" }}>Too early!</span>}
+        <button onClick={handleTap} style={{ width: "60px", height: "60px", borderRadius: "4px", border: "1px solid " + (isGreen ? "#5a9e6a" : "var(--border)"), background: isGreen ? "#1a3a22" : "var(--screen)", cursor: "pointer", transition: "all 0.1s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: "20px", height: "20px", borderRadius: "2px", background: isGreen ? "#5a9e6a" : "var(--border)" }} />
+        </button>
+        <div style={{ height: "18px", marginTop: "8px", fontSize: "11px" }}>
+          {feedback === "nice" && <span style={{ color: "#5a9e6a", letterSpacing: "0.05em" }}>+1</span>}
+          {feedback === "miss" && <span style={{ color: "#9e5a5a", letterSpacing: "0.05em" }}>EARLY</span>}
         </div>
-        <div style={{ fontSize: "11px", color: "#555" }}>
-          {isGreen ? "TAP NOW!" : "Wait for green..."}
-        </div>
+        <div style={{ fontSize: "9px", color: "var(--dim)", letterSpacing: "0.1em" }}>{isGreen ? "TAP NOW" : "WAIT..."}</div>
       </div>
     </div>
   )

@@ -27,16 +27,19 @@ function Timer({ duration, onComplete, paused }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <svg width="140" height="140">
-        <circle cx="70" cy="70" r={radius} fill="none" stroke="#1a1a1a" strokeWidth="8" />
-        <circle cx="70" cy="70" r={radius} fill="none" stroke="#ff6b2b" strokeWidth="8"
+        <circle cx="70" cy="70" r={radius} fill="none" stroke="#3e3e43" strokeWidth="6" />
+        <circle cx="70" cy="70" r={radius} fill="none" stroke="#c8a882" strokeWidth="6"
           strokeDasharray={circumference} strokeDashoffset={offset}
           strokeLinecap="round" transform="rotate(-90 70 70)" />
-        <text x="70" y="70" textAnchor="middle" dominantBaseline="central"
-          style={{ fontSize: "32px", fontWeight: "500", fill: "#ffffff" }}>
+        <text x="70" y="66" textAnchor="middle" dominantBaseline="central"
+          style={{ fontSize: "34px", fontWeight: "500", fill: "#f0ede8", fontFamily: "sans-serif" }}>
           {timeLeft}
         </text>
+        <text x="70" y="88" textAnchor="middle"
+          style={{ fontSize: "9px", fill: "#666", letterSpacing: "0.15em", fontFamily: "sans-serif" }}>
+          SECS
+        </text>
       </svg>
-      <p style={{ fontSize: "12px", color: "#555", marginTop: "4px" }}>seconds</p>
     </div>
   )
 }
