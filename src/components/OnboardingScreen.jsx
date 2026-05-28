@@ -6,10 +6,10 @@ const steps = [
     question: "What's your main goal?",
     subtitle: "We'll tailor your routines around this",
     options: [
-      { id: "injury", label: "Injury prevention", icon: "🛡️" },
-      { id: "flexibility", label: "Improve flexibility", icon: "🤸" },
-      { id: "recovery", label: "Faster recovery", icon: "⚡" },
-      { id: "general", label: "General fitness", icon: "💪" },
+      { id: "injury", label: "Injury prevention" },
+      { id: "flexibility", label: "Improve flexibility" },
+      { id: "recovery", label: "Faster recovery" },
+      { id: "general", label: "General fitness" },
     ]
   },
   {
@@ -17,10 +17,10 @@ const steps = [
     question: "What's your fitness level?",
     subtitle: "Be honest — we'll adjust the intensity",
     options: [
-      { id: "beginner", label: "Beginner", icon: "🌱" },
-      { id: "intermediate", label: "Intermediate", icon: "🔥" },
-      { id: "advanced", label: "Advanced", icon: "⚡" },
-      { id: "athlete", label: "Athlete", icon: "🏆" },
+      { id: "beginner", label: "Beginner" },
+      { id: "intermediate", label: "Intermediate" },
+      { id: "advanced", label: "Advanced" },
+      { id: "athlete", label: "Athlete" },
     ]
   },
   {
@@ -28,10 +28,10 @@ const steps = [
     question: "When do you usually stretch?",
     subtitle: "We'll send reminders at the right time",
     options: [
-      { id: "morning", label: "Morning", icon: "🌅" },
-      { id: "postworkout", label: "Post workout", icon: "🏋️" },
-      { id: "evening", label: "Evening", icon: "🌙" },
-      { id: "throughout", label: "Throughout the day", icon: "☀️" },
+      { id: "morning", label: "Morning" },
+      { id: "postworkout", label: "Post workout" },
+      { id: "evening", label: "Evening" },
+      { id: "throughout", label: "Throughout the day" },
     ]
   }
 ]
@@ -72,10 +72,9 @@ function OnboardingScreen({ userName, onComplete }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
         {step.options.map(option => (
-          <button key={option.id} onClick={() => setSelected(option.id)} style={{ background: selected === option.id ? "#2a2318" : "#343438", border: "1px solid " + (selected === option.id ? "#c8a882" : "#3e3e43"), borderLeft: "3px solid " + (selected === option.id ? "#c8a882" : "#3e3e43"), borderRadius: "4px", padding: "16px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "14px", transition: "all 0.15s" }}>
-            <span style={{ fontSize: "20px" }}>{option.icon}</span>
+          <button key={option.id} onClick={() => setSelected(option.id)} style={{ background: selected === option.id ? "#2a2318" : "#343438", border: "1px solid " + (selected === option.id ? "#c8a882" : "#3e3e43"), borderLeft: "3px solid " + (selected === option.id ? "#c8a882" : "#3e3e43"), borderRadius: "4px", padding: "16px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.15s" }}>
             <span style={{ fontSize: "14px", color: selected === option.id ? "#c8a882" : "#f0ede8", fontWeight: selected === option.id ? "500" : "400" }}>{option.label}</span>
-            {selected === option.id && <span style={{ marginLeft: "auto", color: "#c8a882" }}>✓</span>}
+            {selected === option.id && <span style={{ color: "#c8a882", fontSize: "12px" }}>✓</span>}
           </button>
         ))}
       </div>

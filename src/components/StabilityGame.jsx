@@ -155,7 +155,7 @@ function StabilityGame({ onScoreUpdate, difficulty, onPositionConfirmed }) {
 
       {status === "ready" && !inPosition && (
         <div style={{ textAlign: "center", padding: "20px 10px" }}>
-          <div style={{ fontSize: "32px", marginBottom: "12px" }}>🧍</div>
+        <div style={{ width: "32px", height: "32px", border: "1px solid #c8a882", borderRadius: "2px", margin: "0 auto 12px", transform: "rotate(45deg)" }}></div>
           <div style={{ fontSize: "13px", color: "#c8a882", lineHeight: "1.7", fontStyle: "italic" }}>
             {positionMessage}
           </div>
