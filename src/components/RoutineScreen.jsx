@@ -42,9 +42,9 @@ function RoutineScreen({ routines, onSelect, lastRoutine, onLogout }) {
             style={{ background: "#343438", border: "1px solid #3e3e43", borderLeft: i === 0 ? "3px solid #c8a882" : "1px solid #3e3e43", borderRadius: "4px", padding: "16px", textAlign: "left", cursor: "pointer", width: "100%" }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-              <div style={{ width: "40px", height: "40px", background: "#2e2e33", border: "1px solid #3e3e43", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
-                {routine.emoji}
-              </div>
+             <div style={{ width: "40px", height: "40px", background: "#2e2e33", border: "1px solid #3e3e43", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+  <div style={{ width: "16px", height: "16px", border: "1px solid #c8a882", borderRadius: "2px", transform: "rotate(45deg)" }}></div>
+</div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: "14px", fontWeight: "500", color: "#f0ede8", marginBottom: "2px" }}>{routine.name}</div>
                 <div style={{ fontSize: "11px", color: "#888" }}>{routine.description}</div>
